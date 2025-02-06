@@ -1,3 +1,5 @@
+from operator import index
+
 from pypdf import PdfReader
 import pandas as pd
 
@@ -10,7 +12,7 @@ number_of_pages = len(reader.pages)
 print(lista_concorrentes['col_insc'])
 
 def inicio():
-    for pages in range(4, number_of_pages):
+    for pages in range(4, 6):
         page = reader.pages[pages]
         remov_inutil(page)
     print(paginas)
@@ -25,7 +27,9 @@ def remov_inutil(page):
     return filtro(alunos)
 
 def filtro(alunos):
-    lista_de_insc = lista_concorrentes['col_insc']
-    resul = lista_de_insc.isin([1128143])
-    print(resul)
+    lista_de_insc = list(lista_concorrentes['col_insc'])
+    for aluno in alunos:
+        aluno = aluno.split('/')
+        if aluno[0] in lista_de_insc:
+            print('cu')
 inicio()
