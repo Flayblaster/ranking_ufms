@@ -48,5 +48,5 @@ def trata(item):
     return item.strip().upper()
 
 main(df_inicial)
-df.to_csv('lista_tratada.csv', index=False)
+df.to_csv('lista_nomes.csv', index=False)
 
