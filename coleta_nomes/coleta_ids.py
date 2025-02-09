@@ -41,8 +41,8 @@ def df_append(i, n):
     :param count: Somente um contador de indexação do loc
     :return: não retorna nada
     """
-    df['col_insc'] = i
-    df['col_nome'] = n
+    df['insc'] = i
+    df['nome'] = n
 
 def trata(item):
     return item.strip().upper()
