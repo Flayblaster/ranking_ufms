@@ -1,35 +1,47 @@
-from operator import index
-
 from pypdf import PdfReader
 import pandas as pd
 
-paginas = []
-c = 0
-
-lista_concorrentes = pd.read_csv('../coleta/lista_tratada.csv')
 reader = PdfReader("edital_notas.pdf")
 number_of_pages = len(reader.pages)
-print(lista_concorrentes['col_insc'])
 
-def inicio():
+
+def extracao():
+    """
+    extrai todo o conteúdo das páginas.
+    :return: retorna o conteúdo das páginas, limpo e tratado.
+    """
     for pages in range(4, 6):
         page = reader.pages[pages]
-        remov_inutil(page)
-    print(paginas)
+        conteudo = page.extract_text()
+        conteudo = conteudo.split('\n')
+    gerador_df(limpeza(conteudo))
 
-def remov_inutil(page):
-    text = page.extract_text()
-    text = text.replace(text[0:229], '')
-    text = text.replace(text[-59:], '')
-    text = text.replace(',', '.')
-    text = text.replace(' ', '/')
-    alunos = text.split()
-    return filtro(alunos)
 
-def filtro(alunos):
-    lista_de_insc = list(lista_concorrentes['col_insc'])
-    for aluno in alunos:
-        aluno = aluno.split('/')
-        if aluno[0] in lista_de_insc:
-            print('cu')
-inicio()
+def limpeza(conteudo_sujo):
+    """
+    Faz a limpeza de todo o conteudo, retornado uma lista com inscrição e notas
+    :param conteudo_sujo: É o conteudo cru da página
+    :return:
+    """
+    conteudo_limpo = []
+    conteudo_sujo = conteudo_sujo[6:]
+    conteudo_sujo.pop(-1)
+    for item in conteudo_sujo:
+        item = item.replace(',', '.')
+        item = item.split()
+        item.pop(1)
+        conteudo_limpo.append(item)
+    return conteudo_limpo
+
+def gerador_df(conteudo):
+    for x in range(2):
+        if x == 0:
+            print('1ndad')
+        else:
+            conteudo.extend(conteudo)
+    for item in conteudo:
+        count += 1
+    #conteudo.to_csv('lista_notas.csv', index=False)
+
+
+extracao()
