@@ -3,8 +3,8 @@ import pandas as pd
 df_inicial = pd.read_csv('edital_nomes_online.csv')
 
 df = pd.DataFrame({
-    'col_insc':[],
-    'col_nome':[],
+    'insc':[],
+    'nome':[],
 })
 
 def main(df):
