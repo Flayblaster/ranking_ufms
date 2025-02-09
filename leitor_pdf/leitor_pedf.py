@@ -10,12 +10,15 @@ def extracao():
     extrai todo o conteúdo das páginas.
     :return: retorna o conteúdo das páginas, limpo e tratado.
     """
-    for pages in range(4, 6):
+    global pages
+    lista = []
+    for pages in range(4, 359):
         page = reader.pages[pages]
         conteudo = page.extract_text()
         conteudo = conteudo.split('\n')
-    gerador_df(limpeza(conteudo))
-
+        conteudo_limpo = limpeza(conteudo)
+        lista.extend(conteudo_limpo)
+    gerador_df(lista)
 
 def limpeza(conteudo_sujo):
     """
@@ -34,14 +37,8 @@ def limpeza(conteudo_sujo):
     return conteudo_limpo
 
 def gerador_df(conteudo):
-    for x in range(2):
-        if x == 0:
-            print('1ndad')
-        else:
-            conteudo.extend(conteudo)
-    for item in conteudo:
-        count += 1
-    #conteudo.to_csv('lista_notas.csv', index=False)
+    df = pd.DataFrame(conteudo, columns=['insc', 'nota1', 'nota2', 'nota3', 'nota4', 'red'])
+    df.to_csv('lista_notas.csv', index=False)
 
 
 extracao()
