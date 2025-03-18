@@ -16,31 +16,30 @@ pm = 2
 pred = 2
 valores = []
 medias = []
+for item in df_merged.values:
+    c = soma = media = 0
+    nota_lin = nota_hum = nota_nat = nota_mat = nota_red = 0
+    for nota in item[1:6]:
+        if c == 0:
+            nota_lin = nota*pl
+        elif c == 1:
+            nota_hum = nota*ph
+        elif c == 2:
+            nota_nat = nota*pn
+        elif c == 3:
+            nota_mat = nota*pm
+        elif c == 4:
+            nota_red = nota*pred
+        soma += nota
+        c += 1
 
-def valores():
-    global medias
-    for item in df_merged.values:
-        c = soma = media = 0
-        nota_lin = nota_hum = nota_nat = nota_mat = nota_red = 0
-        for nota in item[1:6]:
-            if c == 0:
-                nota_lin = nota*pl
-            elif c == 1:
-                nota_hum = nota*ph
-            elif c == 2:
-                nota_nat = nota*pn
-            elif c == 3:
-                nota_mat = nota*pm
-            elif c == 4:
-                nota_red = nota*pred
-            soma += nota
-            c += 1
-        soma_pesos = nota_lin + nota_hum + nota_nat + nota_mat + nota_red
-        media = soma_pesos / soma
-        nome = item[6]
-        medias.append([media,nome])
-print(medias)
-medias.sort()
+    soma_pesos = nota_lin + nota_hum + nota_nat + nota_mat + nota_red
+
+    media = soma_pesos / 5
+    nome = item[6]
+    medias.append([media,nome])
+    print(nota_lin, nota_hum, nota_nat, nota_mat, nota_red, nome)
+
+medias.sort(reverse=True)
 for media in medias:
     print(media)
-valores()
